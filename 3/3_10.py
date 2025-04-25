@@ -1,0 +1,16 @@
+places = ['london', 'paris', 'new york', 'ottawa', 'berlin']
+print(places[0].title())
+places.append('lwiw')
+print(places)
+places.insert(1, 'chili')
+print(places)
+del places[1]
+print(places)
+pop_staf = places.pop(0)
+print(places)
+places.remove('new york')
+print(places)
+places.sort()
+print(places)
+print(sorted(places, reverse=True))
+print(len(places))
