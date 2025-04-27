@@ -1,34 +1,6 @@
-class Car:
-	"""make a car"""
-	def __init__(self, make, model, year):
-		"""initialization"""
-		self.make = make
-		self.model = model
-		self.year = year
-		self.odometer_reading = 0
+"""classes that can model electric car."""
 
-	def get_descriptive_name(self):
-		"""return full information about car"""
-		long_name = f"{self.make} {self.model} {self.year}"
-		return long_name.upper()
-
-	def read_odometer(self):
-		"""Show odometer mileage"""
-		print(f"This car has {self.odometer_reading} miles on it.")
-
-	def update_odometer(self, mileage):
-		"""update mileage if it not roll back"""
-		if mileage >= self.odometer_reading:
-			self.odometer_reading = mileage
-		else:
-			print("You can't roll back an odometer!")
-
-	def increment_odometer(self, miles):
-		"""add miles to odometer"""
-		if miles >= 0:
-			self.odometer_reading += miles
-		else:
-			print(f"You can't roll back mileage!")
+from car import Car
 
 class Battery:
 	"""information about the battery"""
@@ -62,9 +34,3 @@ class ElectricCar(Car):
 	def fill_gas_tank(self):
 		"""Electric car don't have gas tank"""
 		print(f"This car doesn't need a gas tank!")
-
-my_electrocar = ElectricCar('Polestar', 'model 2', 2025)
-print(my_electrocar.get_descriptive_name())
-my_electrocar.battery.describe_battery()
-my_electrocar.battery.get_range()
-
