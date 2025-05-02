@@ -1,18 +1,18 @@
 class User:
 	"""take user information"""
-	def __init__(self, first_name, surname, age, sex):
+	def __init__(self, first_name, surname, age, email):
 		"""initialization"""
 		self.first_name = first_name
 		self.surname =surname
 		self.age = age
-		self.sex = sex
+		self.email = email
 		self.login_attempts = 0
 
 	def describe_user(self):
 		"""shows usef info"""
 		print(
 			f"User info:\n\tfirst name: {self.first_name}"
-			f"\n\tsurname: {self.surname}\n\tage: {self.age}\n\tsex: {self.sex}\n"
+			f"\n\tsurname: {self.surname}\n\tage: {self.age}\n\temail: {self.email}\n"
 			) 
 
 	def great_user(self):
@@ -32,8 +32,8 @@ class User:
 
 class Admin(User):
 	"""This is SuperUser"""
-	def __init__(self, first_name, surname, age, sex):
-		super().__init__(first_name, surname, age, sex)
+	def __init__(self, first_name, surname, age, email):
+		super().__init__(first_name, surname, age, email)
 		
 		"""initialization list of privileges"""
 		self.privileges = Privileges()
@@ -52,14 +52,3 @@ class Privileges:
 				print(f"\t- {privilege}")
 		else:
 			print("This user has no privileges!")
-
-
-super_user = Admin('Mykola', 'Admin', 33, 'male')
-
-# super_user.describe_user()
-super_user.great_user()
-super_user.privileges.show_privileges()
-super_user.privileges.privileges = ['can add post', 'can delete post', 'can ban user']
-super_user.privileges.show_privileges()
-
-
