@@ -1,0 +1,4 @@
+In python you can make website
+In python you can make data analises
+In python you can make machine learning
+In python you can make script for automatize something
