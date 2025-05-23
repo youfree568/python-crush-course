@@ -15,9 +15,10 @@ class Bullet(Sprite):
 		self.rect = pygame.Rect(0, 0, self.settings.bullet_width,
 			self.settings.bullet_height)
 		self.rect.midright = sl_game.runner.rect.midright
+	
 
 	def update(self):
-		self.rect.x -= 1
+		self.rect.x += 1
 
 	def draw_bullet(self):
 		pygame.draw.rect(self.screen, self.color, self.rect)
