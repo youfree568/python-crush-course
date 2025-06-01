@@ -1,6 +1,8 @@
 import sys
 import pygame
 
+from random import randint
+
 from settings import Settings
 from units import Unit
 
@@ -42,6 +44,7 @@ class Stars:
 			pygame.display.flip()
 
 	def _create_fleet(self):
+
 		unit = Unit(self)
 		unit_width, unit_height = unit.rect.size
 		available_space_x = self.settings.screen_width - (2 * unit_width)
@@ -54,9 +57,10 @@ class Stars:
 			for unit_number in range(number_units_x):
 				unit = Unit(self)
 				unit_width, unit_height = unit.rect.size
-				unit.x = unit_width + 2 * unit_width * unit_number
+				unit.x = unit_width + 2 * unit_width * unit_number + randint(-20, 20)
 				unit.rect.x = unit.x
-				unit.rect.y = unit.rect.height + 2 * unit.rect.height * row_number
+				
+				unit.rect.y = unit.rect.height + 2 * unit.rect.height * row_number + randint(-20, 20)
 				self.units.add(unit)
 
 if __name__=='__main__':
