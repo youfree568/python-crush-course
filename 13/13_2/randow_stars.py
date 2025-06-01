@@ -29,12 +29,8 @@ class Stars:
 	def run_game(self):
 
 		while True:
-			for event in pygame.event.get():
-				if event.type == pygame.QUIT:
-					sys.exit()
-				elif event.type == pygame.KEYDOWN:
-					if event.key == pygame.K_q:
-						sys.exit()
+			
+			self._check_events()
 			
 			# background color
 			self.screen.fill(self.settings.bg_color)
@@ -42,6 +38,14 @@ class Stars:
 			self.units.draw(self.screen)
 			#  show last one drawing screen
 			pygame.display.flip()
+
+	def _check_events(self):
+		for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					sys.exit()
+				elif event.type == pygame.KEYDOWN:
+					if event.key == pygame.K_q:
+						sys.exit()
 
 	def _create_fleet(self):
 
