@@ -34,13 +34,13 @@ class Rain:
 		"""create rain"""
 		drop = Drop(self)
 		drop_width, drop_height = drop.rect.size
-		available_space_x = self.settings.screen_width - (2 * drop_width)
+		available_space_x = self.settings.screen_width - drop_width
 		number_drops_x = available_space_x // (2 * drop_width)
 
-		available_space_y = self.settings.screen_width - (2 * drop_height)
+		available_space_y = self.settings.screen_height
 		number_rows = available_space_y // (2 * drop_height)
 
-		 #create rain
+		#create rain
 		for row_number in range(number_rows):
 			for drop_number in range(number_drops_x):
 				self._create_drop(drop_number, row_number)
@@ -49,9 +49,10 @@ class Rain:
 	def _create_drop(self, drop_number, row_number):
 		drop = Drop(self)
 		drop_width, drop_height = drop.rect.size 
-		drop.x = drop_width + 2 * drop_width * drop_number + randint(-20, 20)
-		drop.rect.x = drop.x
-		drop.rect.y = drop.rect.height + 2 * drop.rect.height * row_number + randint(-20, 20)
+		drop.rect.x = drop_width + 2 * drop_width * drop_number + randint(-20, 20)
+		# drop.rect.x = drop.x
+		drop.y = drop.rect.height + 2 * drop.rect.height * row_number + randint(-20, 20)
+		drop.rect.y = drop.y
 		self.drops.add(drop)
 
 	def _update_drops(self):

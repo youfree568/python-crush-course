@@ -15,10 +15,10 @@ class Drop(Sprite):
 
 		self.rect.x = self.rect.width
 		self.rect.y = self.rect.height
-		self.x = float(self.rect.x)
+		# self.x = float(self.rect.x)
 		self.y = float(self.rect.y)
 
 	def update(self):
 
-		self.x += self.settings.rain_drop_speed
-		self.rect.y = self.x
+		self.y += (self.settings.rain_drop_speed)
+		self.rect.y = self.y
