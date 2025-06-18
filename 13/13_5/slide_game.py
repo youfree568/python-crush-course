@@ -2,7 +2,7 @@ import pygame
 import sys
 
 from settings import Settings
-from runner import Runner
+from mario import Mario
 from fire_ball import Bullet
 from mushroom import Mushroom
 
@@ -15,24 +15,24 @@ class SlideGame:
 		self.screen = pygame.display.set_mode((self.settings.screen_width, 
 			self.settings.screen_height))
 		pygame.display.set_caption("Slide Game")
-		self.runner = Runner(self)
+		self.mario = Mario(self)
 		self.bullets = pygame.sprite.Group()
 		self.mushrooms = pygame.sprite.Group()
 
-		self._create_fleet()
+		# self._create_fleet()
 
 
 	def run(self):
 
 		while True:
 			self._check_events()
-			self.runner.move()
+			self.mario.move()
 			self._update_fire_ball()
 			self._update_screen()
 			
 	def _update_screen(self):
 		self.screen.fill((self.settings.bg_color))
-		self.runner.blitme()
+		self.mario.blitme()
 			# bullet shot
 		self._update_bullets()
 		self.mushrooms.draw(self.screen)
@@ -56,9 +56,9 @@ class SlideGame:
 		if event.key == pygame.K_q:
 			sys.exit()
 		elif event.key == pygame.K_UP:
-			self.runner.moving_up = True
+			self.mario.moving_up = True
 		elif event.key == pygame.K_DOWN:
-			self.runner.moving_down = True
+			self.mario.moving_down = True
 		elif event.key == pygame.K_SPACE:
 			# make a shot
 			self._fire_bullet()
@@ -66,9 +66,9 @@ class SlideGame:
 	def _check_keyup_events(self, event):			
 		# check if button unpress
 		if event.key == pygame.K_UP:
-			self.runner.moving_up = False
+			self.mario.moving_up = False
 		elif event.key == pygame.K_DOWN:
-			self.runner.moving_down = False
+			self.mario.moving_down = False
 			
 
 	def _update_bullets(self):
@@ -90,6 +90,7 @@ class SlideGame:
 				# print(len(self.bullets))
 				self.bullets.remove(bullet)
 
+		self._check_bullet_mushroom_collision()
 	# def _create_fleet(self):
 	# 	"""create fleet of mushrooms"""
 	# 	mushroom = Mushroom(self)
@@ -108,18 +109,37 @@ class SlideGame:
 	def _create_fleet(self):
 			"""create fleet of mushrooms"""
 			mushroom = Mushroom(self)
-			mushroom_height = mushroom.rect.height
+			mushroom_width, mushroom_height = mushroom.rect.size
 			available_space_y = (self.settings.screen_height - (2 * mushroom_height))
 			number_mushroom_y = available_space_y // (2 * mushroom_height)
 
+			# find how many lines on the screen
+			mario_width = self.mario.rect.width
+			available_space_x = (self.settings.screen_width -
+								(3 * mushroom_width) - mario_width)
+			number_columns = available_space_x // (2 * mushroom_width) 			
 			# create first row
-			for mushroom_number in range(number_mushroom_y):
-				# create mushroom and add him to row
-				mushroom = Mushroom(self)
-				mushroom.y = mushroom_height + 2 * mushroom_height * mushroom_number
-				mushroom.rect.y = mushroom.y
-				self.mushrooms.add(mushroom)
+			for columns in range(number_columns):
+				for mushroom_number in range(number_mushroom_y):
+					self._create_mushroom(mushroom_number, columns)
 
+	def _create_mushroom(self, mushroom_number, columns):
+
+		# create mushroom and add him to row
+		mushroom = Mushroom(self)
+		mushroom_width, mushroom_height = mushroom.rect.size
+		mushroom.y = mushroom_height + 2 * mushroom_height * mushroom_number
+		mushroom.rect.y = mushroom.y
+		mushroom.rect.x = mushroom.rect.width + 2 * mushroom.rect.width * columns
+		self.mushrooms.add(mushroom)
+
+	def _check_bullet_mushroom_collision(self):
+		collisions = pygame.sprite.groupcollide(
+			self.bullets, self.mushrooms, True, True)
+
+		if not self.mushrooms:
+			self.bullets.empty()
+			self._create_fleet()
 
 if __name__=='__main__':
 	sd = SlideGame()

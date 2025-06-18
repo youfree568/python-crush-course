@@ -14,7 +14,7 @@ class Bullet(Sprite):
 		# create bullet
 		self.rect = pygame.Rect(0, 0, self.settings.bullet_width,
 			self.settings.bullet_height)
-		self.rect.midright = sl_game.runner.rect.midright
+		self.rect.midright = sl_game.mario.rect.midright
 	
 
 	def update(self):

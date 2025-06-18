@@ -1,6 +1,6 @@
 import pygame
 
-class Runner:
+class Mario:
 
 	def __init__(self, sl_game):
 
@@ -17,7 +17,7 @@ class Runner:
 		self.moving_down = False
 
 	def move(self):
-		# make runner move
+		# make mario move
 		if self.moving_up == True and self.rect.top > 0:
 			self.rect.y -= 1
 		elif self.moving_down == True and self.rect.bottom < self.screen_rect.bottom:

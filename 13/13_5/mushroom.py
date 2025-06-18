@@ -15,7 +15,7 @@ class Mushroom(Sprite):
 		self.rect = self.image.get_rect()
 
 		# start 
-		self.rect.x = self.rect.width
+		self.rect.x = self.settings.screen_width - (self.rect.width)
 		self.rect.y = self.rect.height
 
 		# Store the mushrooms vertical position
