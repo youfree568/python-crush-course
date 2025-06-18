@@ -1,6 +1,8 @@
 import pygame
 import sys
 
+from random import random
+
 from settings import Settings
 from mario import Mario
 from fire_ball import Bullet
@@ -26,8 +28,10 @@ class SlideGame:
 
 		while True:
 			self._check_events()
+			self._create_mushroom()
 			self.mario.move()
 			self._update_fire_ball()
+			self.mushrooms.update()
 			self._update_screen()
 			
 	def _update_screen(self):
@@ -91,6 +95,9 @@ class SlideGame:
 				self.bullets.remove(bullet)
 
 		self._check_bullet_mushroom_collision()
+
+
+
 	# def _create_fleet(self):
 	# 	"""create fleet of mushrooms"""
 	# 	mushroom = Mushroom(self)
@@ -106,40 +113,47 @@ class SlideGame:
 	# 		mushroom.rect.x = mushroom.x
 	# 		self.mushrooms.add(mushroom)
 
-	def _create_fleet(self):
-			"""create fleet of mushrooms"""
+	def _create_mushroom(self):
+
+		if random() < self.settings.mushroom_frequency:
 			mushroom = Mushroom(self)
-			mushroom_width, mushroom_height = mushroom.rect.size
-			available_space_y = (self.settings.screen_height - (2 * mushroom_height))
-			number_mushroom_y = available_space_y // (2 * mushroom_height)
+			self.mushrooms.add(mushroom)
+			print(len(self.mushrooms))
 
-			# find how many lines on the screen
-			mario_width = self.mario.rect.width
-			available_space_x = (self.settings.screen_width -
-								(3 * mushroom_width) - mario_width)
-			number_columns = available_space_x // (2 * mushroom_width) 			
-			# create first row
-			for columns in range(number_columns):
-				for mushroom_number in range(number_mushroom_y):
-					self._create_mushroom(mushroom_number, columns)
+	# def _create_fleet(self):
+	# 		"""create fleet of mushrooms"""
+	# 		mushroom = Mushroom(self)
+	# 		mushroom_width, mushroom_height = mushroom.rect.size
+	# 		available_space_y = (self.settings.screen_height - (2 * mushroom_height))
+	# 		number_mushroom_y = available_space_y // (2 * mushroom_height)
 
-	def _create_mushroom(self, mushroom_number, columns):
+	# 		# find how many lines on the screen
+	# 		mario_width = self.mario.rect.width
+	# 		available_space_x = (self.settings.screen_width -
+	# 							(3 * mushroom_width) - mario_width)
+	# 		number_columns = available_space_x // (2 * mushroom_width) 			
+	# 		# create first row
+	# 		for columns in range(number_columns):
+	# 			for mushroom_number in range(number_mushroom_y):
+	# 				self._create_mushroom(mushroom_number, columns)
 
-		# create mushroom and add him to row
-		mushroom = Mushroom(self)
-		mushroom_width, mushroom_height = mushroom.rect.size
-		mushroom.y = mushroom_height + 2 * mushroom_height * mushroom_number
-		mushroom.rect.y = mushroom.y
-		mushroom.rect.x = mushroom.rect.width + 2 * mushroom.rect.width * columns
-		self.mushrooms.add(mushroom)
+	# def _create_mushroom(self, mushroom_number, columns):
+
+	# 	# create mushroom and add him to row
+	# 	mushroom = Mushroom(self)
+	# 	mushroom_width, mushroom_height = mushroom.rect.size
+	# 	mushroom.y = mushroom_height + 2 * mushroom_height * mushroom_number
+	# 	mushroom.rect.y = mushroom.y
+	# 	mushroom.rect.x = mushroom.rect.width + 2 * mushroom.rect.width * columns
+	# 	self.mushrooms.add(mushroom)
 
 	def _check_bullet_mushroom_collision(self):
 		collisions = pygame.sprite.groupcollide(
 			self.bullets, self.mushrooms, True, True)
 
-		if not self.mushrooms:
-			self.bullets.empty()
-			self._create_fleet()
+		# if not self.mushrooms:
+			# self.bullets.empty()
+			# self._create_fleet()
 
 if __name__=='__main__':
 	sd = SlideGame()
